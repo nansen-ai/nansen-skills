@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.0] - 2026-11-10
+
+### Deprecated
+- This repository is no longer maintained. Nansen's agent skills now ship with [nansen-cli](https://github.com/nansen-ai/nansen-cli/tree/main/skills). Install them with `npx skills add nansen-ai/nansen-cli`.
+
+### Removed
+- `claude-code/`, `openclaw/` and `references/`. They targeted nansen-cli 1.3.1, and their chain lists were out of date. They remain in git history.
+
+### Added
+- `skills/nansen-skills-moved`, which points agents that install from this repository to the nansen-cli skills.
+- MIT `LICENSE`, matching nansen-cli.
+
 ## [1.0.2] - 2026-02-16
 
 ### Updated (CLI v1.3.1 compatibility)
