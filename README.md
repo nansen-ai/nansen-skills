@@ -1,116 +1,44 @@
-# 🔍 Nansen AI Skills
+# Nansen AI Skills (moved)
 
-Blockchain analytics powered by [Nansen](https://nansen.ai) for AI coding agents. Track smart money flows, profile wallets, analyze tokens, and monitor Hyperliquid perps — all through natural language.
+> [!IMPORTANT]
+> **This repository is no longer maintained.** Nansen's agent skills now ship with [nansen-cli](https://github.com/nansen-ai/nansen-cli/tree/main/skills), where they are updated with every CLI release. The skills that used to live here were written for nansen-cli 1.3.1 and no longer match the current CLI.
 
-Supports **[OpenClaw](https://openclaw.ai)** and **[Claude Code](https://docs.anthropic.com/en/docs/claude-code)**.
-
-## Skills
-
-| Skill | Description |
-|-------|-------------|
-| **nansen-router** | 🔀 Query entry point — routes to the right skill |
-| **nansen-core** | 🔑 Auth, setup, schema introspection — install first |
-| **nansen-smart-money** | 🧠 Smart money flows, DEX trades, holdings, DCA strategies |
-| **nansen-profiler** | 🔎 Wallet profiling — balances, labels, PnL, counterparties |
-| **nansen-token** | 🪙 Token God Mode — holders, flows, screener, PnL leaderboards |
-| **nansen-portfolio** | 📊 DeFi portfolio positions across protocols |
-| **nansen-hyperliquid** | ⚡ Hyperliquid perpetual trading analytics |
-
-## Shared References
-
-The `references/` directory contains detailed API documentation shared by both OpenClaw and Claude Code skills:
-
-| File | Description |
-|------|-------------|
-| `references/schema.json` | Cached `nansen schema` output — source of truth for all commands |
-| `references/commands.md` | Complete command reference with all parameters and return fields |
-| `references/chains.md` | 18 supported chains with address formats |
-| `references/smart-money-labels.md` | Smart money label definitions and filtering |
-| `references/examples/` | Truncated JSON response examples for each domain |
-
-## Get Started
-
-### 1. Install nansen-cli
+## Install the current skills
 
 ```bash
-npm install -g nansen-cli@1.3.1
+npm install -g nansen-cli
+npx skills add nansen-ai/nansen-cli
 ```
 
-### 2. Set up your API key
-
-1. Visit **[app.nansen.ai/auth/agent-setup](https://app.nansen.ai/auth/agent-setup)**
-2. Sign in with your Nansen account
-3. Copy the message shown
-4. Paste it back to your agent
-
-**Fallback options:**
+To install only some skills, pass `--skill`, for example:
 
 ```bash
-export NANSEN_API_KEY=nsk_your_key_here   # Environment variable
-nansen login                                # Interactive login
+npx skills add nansen-ai/nansen-cli --skill nansen-smart-money-tracker
 ```
 
-Get a key manually at **[app.nansen.ai/api](https://app.nansen.ai/api)**.
+Then connect your Nansen account: open [app.nansen.ai/auth/agent-setup](https://app.nansen.ai/auth/agent-setup), sign in, and paste the message it shows into your agent. You can also run `nansen login`, or set `NANSEN_API_KEY` with a key from [app.nansen.ai/api](https://app.nansen.ai/api).
 
-### 3. Verify
+## Where each old skill went
 
-```bash
-nansen profiler balance --address 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 --chain ethereum --limit 1
-```
+| Old skill (this repo) | Current skill in nansen-cli |
+| --- | --- |
+| nansen-router, nansen-core | `nansen-agent-guide` |
+| nansen-smart-money | `nansen-smart-money-tracker` |
+| nansen-profiler | `nansen-wallet-profiler` |
+| nansen-token | `nansen-token-research` |
+| nansen-portfolio | `nansen-defi-positions`, `nansen-portfolio-tracker` |
+| nansen-hyperliquid | `nansen-perp-screener`, `nansen-perp-trader-profile` |
 
----
+nansen-cli also includes skills that create wallets, sign transactions and place trades, such as `nansen-trading` and `nansen-wallet-manager`. This repository only had read-only analytics skills. If that's what you want, install the skills listed above by name.
 
-## Install for OpenClaw
+## Supported chains
 
-Copy skill folders from `openclaw/` into your OpenClaw skills directory. **nansen-router** is the entry point; **nansen-core** is required for auth.
-
-```
-openclaw/
-├── nansen-router/SKILL.md     ← entry point
-├── nansen-core/SKILL.md
-├── nansen-smart-money/SKILL.md
-├── nansen-profiler/SKILL.md
-├── nansen-token/SKILL.md
-├── nansen-portfolio/SKILL.md
-├── nansen-hyperliquid/SKILL.md
-└── scripts/setup.sh
-```
-
-## Install for Claude Code
-
-Copy `claude-code/CLAUDE.md` to your project root. The sub-files and `references/` directory provide detailed command guidance.
-
-```
-claude-code/
-├── CLAUDE.md                  ← entry point
-├── nansen-smart-money.md
-├── nansen-profiler.md
-├── nansen-token.md
-├── nansen-portfolio.md
-├── nansen-hyperliquid.md
-└── scripts/setup.sh
-```
-
----
-
-## Supported Chains (18)
-
-**Primary:** Ethereum · Solana · Base · HyperEVM · BNB
-
-**Also:** Arbitrum · Polygon · Optimism · Avalanche · Linea · Scroll · Mantle · Ronin · Sei · Plasma · Sonic · Monad · IOTA EVM
-
-## Architecture
-
-All skills wrap `nansen-cli` — no direct API calls. This gives you built-in caching, auto-retry with backoff, and schema introspection (`nansen schema`) for free. The cached schema is stored at `references/schema.json` so agents don't need to run the command each time.
+See [Supported Chains](https://docs.nansen.ai/reference/chains) in the Nansen docs. That page is kept current; this repository no longer lists chains.
 
 ## Links
 
-- [Nansen](https://nansen.ai) — Platform
-- [Nansen API Docs](https://docs.nansen.ai) — API documentation
-- [Get API Key](https://app.nansen.ai/api) — API key management
-- [OpenClaw](https://openclaw.ai) — Agent platform
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — Anthropic's coding agent
+- [nansen-cli](https://github.com/nansen-ai/nansen-cli) and its [skills](https://github.com/nansen-ai/nansen-cli/tree/main/skills)
+- [Nansen API docs](https://docs.nansen.ai)
+- [Nansen](https://nansen.ai)
 
----
-
-📊 Data by [Nansen](https://nansen.ai)
+The older skills remain in this repository's git history.
